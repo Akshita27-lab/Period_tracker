@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Understanding Your Menstrual Cycle - Blog{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 py-8">
+    <div class="max-w-3xl mx-auto px-4">
+        <!-- Article Content -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h1 class="text-2xl font-bold text-pink-600 mb-4">Understanding Your Menstrual Cycle</h1>
+            <p>Your menstrual cycle is more than just your period — it's a powerful indicator of your overall health.</p>
+
+            <h2 class="font-semibold mt-4">📌 What is a Menstrual Cycle?</h2>
+            <p>The menstrual cycle is the monthly hormonal cycle a woman's body goes through to prepare for pregnancy. It begins on the first day of your period and ends the day before your next period starts.</p>
+
+            <p>The average cycle is 28 days, but 21 to 35 days is totally normal.</p>
+
+            <h2 class="font-semibold mt-4">🔄 The 4 Phases of the Menstrual Cycle:</h2>
+
+            <h3 class="font-semibold mt-3">1. Menstrual Phase (Day 1–5)</h3>
+            <p>🩸 This is when you have your period — the shedding of the uterine lining. You may feel tired, moody, or crampy during this time.</p>
+            <p>💡 Tip: Use warm compresses, stay hydrated, and rest when needed.</p>
+
+            <h3 class="font-semibold mt-3">2. Follicular Phase (Day 1–13)</h3>
+            <p>🌱 Starts at the same time as your period and lasts until ovulation. Your body prepares to release an egg, and estrogen levels rise — you may feel more energetic and focused.</p>
+
+            <h3 class="font-semibold mt-3">3. Ovulation Phase (Around Day 14)</h3>
+            <p>🌟 Your ovary releases an egg. This is your most fertile time. You may notice increased energy, confidence, or clear discharge.</p>
+            <p>📌 Note: If you're trying to avoid or plan pregnancy, this phase is key.</p>
+
+            <h3 class="font-semibold mt-3">4. Luteal Phase (Day 15–28)</h3>
+            <p>🌙 After ovulation, your body prepares for a possible pregnancy. If not pregnant, hormone levels drop, possibly causing PMS symptoms like bloating, mood swings, or acne.</p>
+            <p>💡 Tip: Eat magnesium-rich foods and reduce sugar to ease PMS.</p>
+
+            <a href="{{ url_for('blog') }}" class="inline-block mt-6 text-pink-500 hover:underline">← Back to Blog</a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

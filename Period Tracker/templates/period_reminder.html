@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}🌸 Period Reminder - Period Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3><i class="fas fa-question-circle"></i> Period Check-in</h3>
+                <p class="mb-0">Let's check how you're doing today</p>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <h5>Has your period started today?</h5>
+                    <p class="text-muted">
+                        Expected date: {{ next_period.strftime('%B %d, %Y') }}
+                    </p>
+                </div>
+                
+                <form method="POST" class="d-grid gap-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="submit" name="has_started" value="yes" class="btn btn-success w-100 py-4">
+                                <i class="fas fa-check-circle fa-2x mb-2"></i><br>
+                                <strong>Yes, it started</strong><br>
+                                <small>Log my period</small>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="submit" name="has_started" value="no" class="btn btn-secondary w-100 py-4">
+                                <i class="fas fa-clock fa-2x mb-2"></i><br>
+                                <strong>Not yet</strong><br>
+                                <small>I'll check tomorrow</small>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <hr class="my-4">
+                
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-heart"></i> Remember:</h6>
+                    <ul class="mb-0 text-start">
+                        <li>It's completely normal for periods to vary by a few days</li>
+                        <li>Stress, travel, and lifestyle changes can affect your cycle</li>
+                        <li>Listen to your body and take care of yourself</li>
+                        <li>If you're concerned, don't hesitate to talk to a healthcare provider</li>
+                    </ul>
+                </div>
+                
+                <div class="text-center">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

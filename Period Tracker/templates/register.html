@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Period Tracker{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Floating Background Elements -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-20 left-10 text-pink-300 opacity-20 animate-pulse">💖</div>
+        <div class="absolute top-40 right-20 text-purple-300 opacity-20 animate-pulse delay-1000">🌸</div>
+        <div class="absolute bottom-40 left-20 text-rose-300 opacity-20 animate-pulse delay-2000">✨</div>
+        <div class="absolute bottom-20 right-10 text-pink-300 opacity-20 animate-pulse delay-3000">💕</div>
+    </div>
+
+    <div class="max-w-2xl w-full space-y-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center">
+            <div class="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-pink-400 to-purple-500 shadow-xl">
+                <i class="fas fa-heart text-white text-2xl loading-hearts"></i>
+            </div>
+            <h2 class="mt-6 text-center text-4xl font-script text-pink-600 sparkle">
+                Join FlowBuddy
+            </h2>
+            <p class="mt-3 text-center text-lg text-gray-600 font-medium">
+                Start your journey to better menstrual health ✨
+            </p>
+        </div>
+        
+        <form class="mt-8 space-y-6" method="POST">
+            <!-- Basic Information -->
+            <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl border-2 border-pink-200">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl mr-3">👤</div>
+                    <h3 class="text-2xl font-script text-pink-600">Basic Information</h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                        <input id="name" name="name" type="text" required 
+                               class="girly-input w-full px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                               placeholder="Enter your full name">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                        <input id="email" name="email" type="email" required 
+                               class="girly-input w-full px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                               placeholder="Enter your email">
+                    </div>
+                    
+                    <div>
+                        <label for="age" class="block text-sm font-bold text-gray-700 mb-2">Age (Optional)</label>
+                        <input id="age" name="age" type="number" min="10" max="100"
+                               class="girly-input w-full px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                               placeholder="Enter your age">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-bold text-gray-700 mb-2">Password</label>
+                        <input id="password" name="password" type="password" required 
+                               class="girly-input w-full px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                               placeholder="Create a secure password">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Health Information -->
+            <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl border-2 border-purple-200">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl mr-3">💝</div>
+                    <h3 class="text-2xl font-script text-purple-600">Health Information (Optional)</h3>
+                </div>
+                <p class="text-gray-600 mb-6 font-medium">This helps us provide personalized health advice 💕</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl border border-pink-200">
+                        <input id="pcos" name="pcos" type="checkbox" 
+                               class="h-5 w-5 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                        <label for="pcos" class="ml-3 block text-sm font-medium text-gray-700">
+                            PCOS (Polycystic Ovary Syndrome)
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-200">
+                        <input id="thyroid" name="thyroid" type="checkbox" 
+                               class="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded">
+                        <label for="thyroid" class="ml-3 block text-sm font-medium text-gray-700">
+                            Thyroid Issues
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl border border-rose-200">
+                        <input id="anemia" name="anemia" type="checkbox" 
+                               class="h-5 w-5 text-rose-600 focus:ring-rose-500 border-gray-300 rounded">
+                        <label for="anemia" class="ml-3 block text-sm font-medium text-gray-700">
+                            Anemia
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl border border-pink-200">
+                        <input id="diabetes" name="diabetes" type="checkbox" 
+                               class="h-5 w-5 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                        <label for="diabetes" class="ml-3 block text-sm font-medium text-gray-700">
+                            Diabetes
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Emergency Contact -->
+            <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl border-2 border-rose-200">
+                <div class="flex items-center mb-6">
+                    <div class="text-3xl mr-3">🆘</div>
+                    <h3 class="text-2xl font-script text-rose-600">Emergency Contact (Optional)</h3>
+                </div>
+                <p class="text-gray-600 mb-6 font-medium">Someone we can contact in case of emergency 💕</p>
+                
+                <div>
+                    <label for="emergency_contact" class="block text-sm font-bold text-gray-700 mb-2">Emergency Contact</label>
+                    <input id="emergency_contact" name="emergency_contact" type="text"
+                           class="girly-input w-full px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"
+                           placeholder="Name and phone number">
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="girly-btn text-white px-12 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl">
+                    <i class="fas fa-heart mr-3"></i>
+                    Create Account
+                </button>
+            </div>
+        </form>
+        
+        <!-- Login Link -->
+        <div class="text-center">
+            <p class="text-gray-600 font-medium">
+                Already have an account? 
+                <a href="{{ url_for('login') }}" class="text-pink-600 hover:text-pink-700 font-bold underline">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add sparkle effects
+    const sparkleElements = document.querySelectorAll('.sparkle');
+    sparkleElements.forEach(function(element) {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+        });
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Enhanced form validation
+    const form = document.querySelector('form');
+    const password = document.getElementById('password');
+    const age = document.getElementById('age');
+    
+    form.addEventListener('submit', function(e) {
+        let isValid = true;
+        
+        // Password validation
+        if (password.value.length < 6) {
+            alert('Password must be at least 6 characters long! 💕');
+            isValid = false;
+        }
+        
+        // Age validation
+        if (age.value && (age.value < 10 || age.value > 100)) {
+            alert('Please enter a valid age between 10 and 100! 💕');
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
+    
+    // Add cute animations to checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const parent = this.closest('div');
+            if (this.checked) {
+                parent.style.transform = 'scale(1.05)';
+                parent.style.borderColor = '#ec4899';
+                setTimeout(() => {
+                    parent.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                parent.style.borderColor = '';
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

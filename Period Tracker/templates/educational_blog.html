@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Educational Blog - Period Tracker{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="bg-gradient-to-r from-pink-500 to-purple-500 rounded-3xl p-8 text-white mb-8">
+    <div class="text-center">
+        <h1 class="text-3xl md:text-4xl font-script mb-4">Educational Blog</h1>
+        <p class="text-pink-100 text-lg">Learn about menstrual health, break myths, and empower yourself</p>
+    </div>
+</div>
+
+<!-- Blog Posts -->
+<div class="space-y-8">
+    {% for post in blog_posts %}
+    <div class="card-hover bg-white rounded-3xl p-8 shadow-lg">
+        <div class="flex items-start space-x-6">
+            <!-- Post Image -->
+            <div class="w-32 h-32 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-book-open text-3xl text-pink-500"></i>
+            </div>
+            
+            <!-- Post Content -->
+            <div class="flex-1">
+                <div class="flex items-center mb-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-medium 
+                        {% if post.category == 'myths' %}bg-yellow-100 text-yellow-700
+                        {% elif post.category == 'stories' %}bg-purple-100 text-purple-700
+                        {% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ post.category.title() }}
+                    </span>
+                    <span class="ml-3 text-sm text-gray-500">5 min read</span>
+                </div>
+                
+                <h2 class="text-2xl font-script text-pink-600 mb-3">{{ post.title }}</h2>
+                <p class="text-gray-600 mb-4">{{ post.content }}</p>
+                
+                <button class="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-full hover:from-pink-600 hover:to-purple-600 transition-colors">
+                    Read More
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Featured Topics -->
+<div class="mt-12">
+    <h2 class="text-2xl font-script text-pink-600 mb-6 text-center">Featured Topics</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Myths Section -->
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+            <div class="text-center mb-4">
+                <i class="fas fa-question-circle text-3xl text-yellow-500 mb-3"></i>
+                <h3 class="text-lg font-script text-yellow-600">Period Myths</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li>• "You can't exercise during periods"</li>
+                <li>• "Periods are dirty or shameful"</li>
+                <li>• "You can't get pregnant on your period"</li>
+                <li>• "Periods should be exactly 28 days"</li>
+            </ul>
+            <div class="mt-4 text-center">
+                <button class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
+                    Learn More →
+                </button>
+            </div>
+        </div>
+        
+        <!-- Stories Section -->
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+            <div class="text-center mb-4">
+                <i class="fas fa-star text-3xl text-purple-500 mb-3"></i>
+                <h3 class="text-lg font-script text-purple-600">Inspiring Stories</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li>• Women breaking period taboos</li>
+                <li>• Period activism around the world</li>
+                <li>• Personal journey stories</li>
+                <li>• Period product innovations</li>
+            </ul>
+            <div class="mt-4 text-center">
+                <button class="text-purple-600 hover:text-purple-700 text-sm font-medium">
+                    Read Stories →
+                </button>
+            </div>
+        </div>
+        
+        <!-- Awareness Section -->
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+            <div class="text-center mb-4">
+                <i class="fas fa-lightbulb text-3xl text-green-500 mb-3"></i>
+                <h3 class="text-lg font-script text-green-600">Health Awareness</h3>
+            </div>
+            <ul class="space-y-2 text-sm text-gray-700">
+                <li>• Understanding your cycle</li>
+                <li>• Period health basics</li>
+                <li>• When to see a doctor</li>
+                <li>• Period product safety</li>
+            </ul>
+            <div class="mt-4 text-center">
+                <button class="text-green-600 hover:text-green-700 text-sm font-medium">
+                    Learn Health →
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Interactive Quiz -->
+<div class="mt-12">
+    <div class="card-hover bg-white rounded-3xl p-8 shadow-lg">
+        <h2 class="text-2xl font-script text-pink-600 mb-4 text-center">Test Your Knowledge</h2>
+        <p class="text-gray-600 text-center mb-6">Take our quick quiz to learn more about menstrual health</p>
+        
+        <div class="max-w-md mx-auto">
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6">
+                <h3 class="text-lg font-script text-pink-600 mb-4">Quick Quiz</h3>
+                <p class="text-gray-700 mb-4">How much do you know about periods?</p>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center">
+                        <input type="radio" name="quiz" id="quiz1" class="mr-3">
+                        <label for="quiz1" class="text-sm text-gray-700">I'm a beginner</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" name="quiz" id="quiz2" class="mr-3">
+                        <label for="quiz2" class="text-sm text-gray-700">I know some basics</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" name="quiz" id="quiz3" class="mr-3">
+                        <label for="quiz3" class="text-sm text-gray-700">I'm quite knowledgeable</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" name="quiz" id="quiz4" class="mr-3">
+                        <label for="quiz4" class="text-sm text-gray-700">I'm an expert</label>
+                    </div>
+                </div>
+                
+                <button class="w-full mt-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white py-2 rounded-xl hover:from-pink-600 hover:to-purple-600 transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resources Section -->
+<div class="mt-12">
+    <h2 class="text-2xl font-script text-pink-600 mb-6 text-center">Additional Resources</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-video text-2xl text-pink-500 mr-4"></i>
+                <h3 class="text-lg font-script text-pink-600">Video Resources</h3>
+            </div>
+            <p class="text-gray-600 text-sm mb-4">Watch educational videos about menstrual health</p>
+            <button class="text-pink-600 hover:text-pink-700 text-sm font-medium">
+                Watch Videos →
+            </button>
+        </div>
+        
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+            <div class="flex items-center mb-4">
+                <i class="fas fa-download text-2xl text-purple-500 mr-4"></i>
+                <h3 class="text-lg font-script text-purple-600">Downloadable Guides</h3>
+            </div>
+            <p class="text-gray-600 text-sm mb-4">Get printable guides and checklists</p>
+            <button class="text-purple-600 hover:text-purple-700 text-sm font-medium">
+                Download Guides →
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a href="{{ url_for('lifestyle_advice') }}" class="card-hover bg-white rounded-3xl p-6 shadow-lg text-center hover:transform hover:scale-105 transition-all duration-200">
+        <i class="fas fa-lightbulb text-3xl text-pink-500 mb-4"></i>
+        <h3 class="text-xl font-script text-pink-600 mb-2">Lifestyle Advice</h3>
+        <p class="text-gray-600">Get personalized health recommendations</p>
+    </a>
+    
+    <a href="{{ url_for('self_care') }}" class="card-hover bg-white rounded-3xl p-6 shadow-lg text-center hover:transform hover:scale-105 transition-all duration-200">
+        <i class="fas fa-spa text-3xl text-purple-500 mb-4"></i>
+        <h3 class="text-xl font-script text-purple-600 mb-2">Self-Care</h3>
+        <p class="text-gray-600">Track your wellness activities</p>
+    </a>
+    
+    <a href="{{ url_for('health_tips') }}" class="card-hover bg-white rounded-3xl p-6 shadow-lg text-center hover:transform hover:scale-105 transition-all duration-200">
+        <i class="fas fa-heart text-3xl text-peach-500 mb-4"></i>
+        <h3 class="text-xl font-script text-peach-600 mb-2">Health Tips</h3>
+        <p class="text-gray-600">Discover wellness tips and advice</p>
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Quiz functionality
+    const quizButtons = document.querySelectorAll('input[name="quiz"]');
+    const startQuizBtn = document.querySelector('button');
+    
+    startQuizBtn.addEventListener('click', function() {
+        const selectedQuiz = document.querySelector('input[name="quiz"]:checked');
+        if (selectedQuiz) {
+            // Show quiz based on selection
+            alert('Quiz feature coming soon! This will provide personalized educational content based on your knowledge level.');
+        } else {
+            alert('Please select your knowledge level first.');
+        }
+    });
+    
+    // Add hover effects to cards
+    const cards = document.querySelectorAll('.card-hover');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,390 @@
+{% extends "base.html" %}
+
+{% block title %}Lifestyle & Health Advice{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">🌿 Lifestyle & Health Advice</h1>
+            <p class="text-lg text-gray-600">Personalized recommendations based on your health profile</p>
+        </div>
+
+        <!-- Health Conditions Overview -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your Health Profile</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {% if current_user.pcos %}
+                <div class="bg-pink-100 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">🔄</div>
+                    <div class="font-semibold text-pink-800">PCOS</div>
+                </div>
+                {% endif %}
+                {% if current_user.thyroid %}
+                <div class="bg-blue-100 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">🦋</div>
+                    <div class="font-semibold text-blue-800">Thyroid</div>
+                </div>
+                {% endif %}
+                {% if current_user.anemia %}
+                <div class="bg-red-100 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">🩸</div>
+                    <div class="font-semibold text-red-800">Anemia</div>
+                </div>
+                {% endif %}
+                {% if current_user.diabetes %}
+                <div class="bg-green-100 rounded-lg p-4 text-center">
+                    <div class="text-2xl mb-2">🍯</div>
+                    <div class="font-semibold text-green-800">Diabetes</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- PCOS Section -->
+        {% if current_user.pcos %}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">🔄</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">PCOS Management</h2>
+                    <p class="text-gray-600">Polycystic Ovary Syndrome - Natural ways to manage symptoms</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Diet -->
+                <div class="bg-pink-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-pink-800 mb-4">🥗 Diet Recommendations</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Low GI foods:</strong> Quinoa, sweet potato, brown rice</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Anti-inflammatory:</strong> Turmeric, ginger, omega-3 rich foods</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Protein-rich:</strong> Lean chicken, fish, legumes</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">✗</span>
+                            <span><strong>Avoid:</strong> Refined carbs, sugary drinks, processed foods</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Exercise -->
+                <div class="bg-purple-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-4">🏃‍♀️ Exercise Tips</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Strength training:</strong> 3-4 times per week</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Cardio:</strong> Walking, swimming, cycling</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Yoga:</strong> Stress reduction and hormone balance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">💡</span>
+                            <span><strong>Tip:</strong> Start with 30 minutes daily</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Supplements -->
+            <div class="mt-6 bg-yellow-50 rounded-xl p-6">
+                <h3 class="text-xl font-semibold text-yellow-800 mb-4">💊 Recommended Supplements</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">🌿</div>
+                        <div class="font-semibold">Inositol</div>
+                        <div class="text-sm text-gray-600">Improves insulin sensitivity</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">🐟</div>
+                        <div class="font-semibold">Omega-3</div>
+                        <div class="text-sm text-gray-600">Reduces inflammation</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl mb-2">☀️</div>
+                        <div class="font-semibold">Vitamin D</div>
+                        <div class="text-sm text-gray-600">Hormone regulation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Thyroid Section -->
+        {% if current_user.thyroid %}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">🦋</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Thyroid Health</h2>
+                    <p class="text-gray-600">Supporting your thyroid function naturally</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Diet -->
+                <div class="bg-blue-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4">🥗 Thyroid-Friendly Foods</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Iodine-rich:</strong> Seaweed, fish, dairy, eggs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Selenium:</strong> Brazil nuts, tuna, turkey</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Zinc:</strong> Oysters, beef, pumpkin seeds</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">✗</span>
+                            <span><strong>Avoid:</strong> Goitrogenic foods (raw cruciferous)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Lifestyle -->
+                <div class="bg-cyan-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-cyan-800 mb-4">🌅 Lifestyle Tips</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Sleep:</strong> 7-9 hours per night</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Stress management:</strong> Meditation, deep breathing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Exercise:</strong> Moderate intensity, regular schedule</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">💡</span>
+                            <span><strong>Tip:</strong> Avoid extreme diets</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Anemia Section -->
+        {% if current_user.anemia %}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">🩸</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Anemia Management</h2>
+                    <p class="text-gray-600">Building your iron levels naturally</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Iron-Rich Foods -->
+                <div class="bg-red-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-red-800 mb-4">🥩 Iron-Rich Foods</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Heme iron:</strong> Red meat, liver, fish</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Non-heme iron:</strong> Spinach, lentils, beans</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Vitamin C:</strong> Citrus fruits, bell peppers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">✗</span>
+                            <span><strong>Avoid:</strong> Coffee/tea with meals</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Meal Planning -->
+                <div class="bg-orange-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-orange-800 mb-4">🍽️ Meal Planning</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Breakfast:</strong> Iron-fortified cereal with berries</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Lunch:</strong> Spinach salad with lean protein</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Dinner:</strong> Lentil curry with brown rice</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">💡</span>
+                            <span><strong>Tip:</strong> Cook in cast iron pans</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Diabetes Section -->
+        {% if current_user.diabetes %}
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">🍯</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Diabetes Management</h2>
+                    <p class="text-gray-600">Balancing blood sugar during your cycle</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Blood Sugar Management -->
+                <div class="bg-green-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-green-800 mb-4">📊 Blood Sugar Tips</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Regular meals:</strong> Eat every 3-4 hours</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Complex carbs:</strong> Whole grains, vegetables</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Protein balance:</strong> Include with every meal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-red-500 mr-2">✗</span>
+                            <span><strong>Avoid:</strong> Sugary snacks, refined carbs</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Exercise -->
+                <div class="bg-emerald-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-emerald-800 mb-4">🏃‍♀️ Exercise Guidelines</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Cardio:</strong> 150 minutes per week</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Strength training:</strong> 2-3 times per week</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 mr-2">✓</span>
+                            <span><strong>Monitor:</strong> Check blood sugar before/after</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 mr-2">💡</span>
+                            <span><strong>Tip:</strong> Keep glucose tablets handy</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- General Wellness -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">💖</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">General Wellness</h2>
+                    <p class="text-gray-600">Tips for everyone to feel their best</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Sleep -->
+                <div class="bg-indigo-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-indigo-800 mb-4">😴 Sleep Hygiene</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 7-9 hours per night</li>
+                        <li>• Consistent bedtime</li>
+                        <li>• No screens 1 hour before bed</li>
+                        <li>• Cool, dark room</li>
+                    </ul>
+                </div>
+
+                <!-- Stress Management -->
+                <div class="bg-purple-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-purple-800 mb-4">🧘 Stress Management</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• Deep breathing exercises</li>
+                        <li>• Meditation 10-15 min daily</li>
+                        <li>• Nature walks</li>
+                        <li>• Journaling</li>
+                    </ul>
+                </div>
+
+                <!-- Hydration -->
+                <div class="bg-blue-50 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4">💧 Hydration</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>• 8-10 glasses of water daily</li>
+                        <li>• Herbal teas</li>
+                        <li>• Coconut water for electrolytes</li>
+                        <li>• Limit caffeine</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Contact -->
+        {% if current_user.emergency_contact %}
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <div class="flex items-center mb-6">
+                <div class="text-3xl mr-4">🆘</div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800">Emergency Contact</h2>
+                    <p class="text-gray-600">Someone to reach out to when you need support</p>
+                </div>
+            </div>
+            
+            <div class="bg-red-50 rounded-xl p-6">
+                <div class="text-center">
+                    <div class="text-2xl mb-4">📞</div>
+                    <div class="font-semibold text-lg text-gray-800 mb-2">Your Emergency Contact</div>
+                    <div class="text-gray-600 mb-4">{{ current_user.emergency_contact }}</div>
+                    <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition-colors">
+                        Need Help? Call Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mt-8">
+            <a href="{{ url_for('dashboard') }}" class="inline-flex items-center bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-600 hover:to-purple-600 transition-all transform hover:scale-105">
+                <span class="mr-2">🏠</span>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

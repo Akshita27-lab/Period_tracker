@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Self-Care Activities - Period Tracker{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<div class="bg-gradient-to-r from-pink-500 to-purple-500 rounded-3xl p-8 text-white mb-8">
+    <div class="text-center">
+        <h1 class="text-3xl md:text-4xl font-script mb-4">Self-Care & Wellness</h1>
+        <p class="text-pink-100 text-lg">Track your wellness activities and practice self-care</p>
+    </div>
+</div>
+
+<!-- Add New Activity -->
+<div class="mb-8">
+    <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+        <h2 class="text-2xl font-script text-pink-600 mb-4">Log New Activity</h2>
+        
+        <form id="self-care-form" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="activity_type" class="block text-sm font-medium text-gray-700 mb-2">Activity Type</label>
+                    <select id="activity_type" name="activity_type" class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                        <option value="">Select an activity</option>
+                        <option value="exercise">Exercise</option>
+                        <option value="meditation">Meditation</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="journaling">Journaling</option>
+                        <option value="reading">Reading</option>
+                        <option value="bath">Warm Bath</option>
+                        <option value="massage">Self-Massage</option>
+                        <option value="walking">Walking</option>
+                        <option value="stretching">Stretching</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="duration" class="block text-sm font-medium text-gray-700 mb-2">Duration (minutes)</label>
+                    <input type="number" id="duration" name="duration" min="5" max="300" 
+                           class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                           placeholder="30">
+                </div>
+            </div>
+            
+            <div>
+                <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Notes (Optional)</label>
+                <textarea id="notes" name="notes" rows="3" 
+                          class="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                          placeholder="How did this activity make you feel?"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white py-3 rounded-xl hover:from-pink-600 hover:to-purple-600 transition-colors">
+                <i class="fas fa-plus mr-2"></i>Log Activity
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Recent Activities -->
+<div class="mb-8">
+    <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+        <h2 class="text-2xl font-script text-pink-600 mb-4">Recent Activities</h2>
+        
+        {% if activities %}
+        <div class="space-y-4">
+            {% for activity in activities %}
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-heart text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">{{ activity.activity_type.title() }}</h3>
+                            <p class="text-sm text-gray-600">{{ activity.duration }} minutes • {{ activity.date.strftime('%b %d, %Y') }}</p>
+                            {% if activity.notes %}
+                            <p class="text-sm text-gray-500 mt-1">{{ activity.notes }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-gray-500">{{ activity.date.strftime('%I:%M %p') }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <i class="fas fa-heart text-4xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500 mb-4">No activities logged yet</p>
+            <p class="text-sm text-gray-400">Start by logging your first self-care activity above</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Self-Care Tips -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+        <div class="text-center">
+            <i class="fas fa-spa text-3xl text-pink-500 mb-4"></i>
+            <h3 class="text-lg font-script text-pink-600 mb-2">Relaxation</h3>
+            <p class="text-gray-600 text-sm">Take time to unwind and destress</p>
+        </div>
+        <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li>• Warm baths with Epsom salts</li>
+            <li>• Meditation and deep breathing</li>
+            <li>• Aromatherapy with lavender</li>
+            <li>• Gentle stretching</li>
+        </ul>
+    </div>
+    
+    <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+        <div class="text-center">
+            <i class="fas fa-dumbbell text-3xl text-purple-500 mb-4"></i>
+            <h3 class="text-lg font-script text-purple-600 mb-2">Movement</h3>
+            <p class="text-gray-600 text-sm">Stay active and energized</p>
+        </div>
+        <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li>• Light yoga or stretching</li>
+            <li>• Walking in nature</li>
+            <li>• Swimming</li>
+            <li>• Dancing to your favorite music</li>
+        </ul>
+    </div>
+    
+    <div class="card-hover bg-white rounded-3xl p-6 shadow-lg">
+        <div class="text-center">
+            <i class="fas fa-book text-3xl text-peach-500 mb-4"></i>
+            <h3 class="text-lg font-script text-peach-600 mb-2">Mindfulness</h3>
+            <p class="text-gray-600 text-sm">Connect with your inner self</p>
+        </div>
+        <ul class="mt-4 space-y-2 text-sm text-gray-700">
+            <li>• Journaling your thoughts</li>
+            <li>• Reading a good book</li>
+            <li>• Practicing gratitude</li>
+            <li>• Creative activities</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <a href="{{ url_for('lifestyle_advice') }}" class="card-hover bg-white rounded-3xl p-6 shadow-lg text-center hover:transform hover:scale-105 transition-all duration-200">
+        <i class="fas fa-lightbulb text-3xl text-pink-500 mb-4"></i>
+        <h3 class="text-xl font-script text-pink-600 mb-2">Lifestyle Advice</h3>
+        <p class="text-gray-600">Get personalized health recommendations</p>
+    </a>
+    
+    <a href="{{ url_for('health_tips') }}" class="card-hover bg-white rounded-3xl p-6 shadow-lg text-center hover:transform hover:scale-105 transition-all duration-200">
+        <i class="fas fa-heart text-3xl text-purple-500 mb-4"></i>
+        <h3 class="text-xl font-script text-purple-600 mb-2">Health Tips</h3>
+        <p class="text-gray-600">Discover wellness tips and advice</p>
+    </a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('self-care-form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            activity_type: document.getElementById('activity_type').value,
+            duration: parseInt(document.getElementById('duration').value),
+            notes: document.getElementById('notes').value,
+            date: new Date().toISOString().split('T')[0]
+        };
+        
+        if (!formData.activity_type || !formData.duration) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        fetch('/self_care', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                const successDiv = document.createElement('div');
+                successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                successDiv.textContent = data.message;
+                document.body.appendChild(successDiv);
+                
+                setTimeout(() => {
+                    successDiv.remove();
+                }, 3000);
+                
+                // Reset form
+                form.reset();
+                
+                // Reload page to show new activity
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}🌸 Period Tracker - Track Your Flow, Own Your Glow{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-pink-50 via-purple-50 to-peach-50"></div>
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23fce7f3" fill-opacity="0.3"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="text-center">
+            <!-- Main Heading -->
+            <h1 class="text-5xl md:text-7xl font-script text-pink-600 mb-6">
+                Track Your Flow, Own Your Glow ✨
+            </h1>
+            
+            <!-- Subtitle -->
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Your cycle, your power. Embrace your body's natural rhythm with our beautiful period tracking app.
+            </p>
+            
+            <!-- Motivational Quote -->
+            <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 mb-8 inline-block">
+                <p class="text-lg font-script text-pink-600 italic">
+                    "Every cycle is a fresh start 🌸"
+                </p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="{{ url_for('register') }}" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-heart mr-2"></i>Start Your Journey
+                </a>
+                <a href="{{ url_for('login') }}" class="bg-white/90 hover:bg-white text-pink-600 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 border-2 border-pink-200 hover:border-pink-300">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Welcome Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-20 bg-white/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-script text-pink-600 mb-4">Why Choose Our Tracker?</h2>
+            <p class="text-gray-600 text-lg">Beautiful, intuitive, and empowering</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg">
+                <div class="w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Smart Tracking</h3>
+                <p class="text-gray-600">Predict your cycle with AI-powered insights and personalized reminders</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Health Insights</h3>
+                <p class="text-gray-600">Track symptoms, mood, and get personalized health tips</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg">
+                <div class="w-16 h-16 bg-gradient-to-r from-peach-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Privacy First</h3>
+                <p class="text-gray-600">Your data stays private and secure, always</p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg">
+                <div class="w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-heart text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Self-Care Focus</h3>
+                <p class="text-gray-600">Get wellness tips and motivational quotes to support your journey</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="py-20 bg-gradient-to-br from-pink-50 to-purple-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-script text-pink-600 mb-4">What Our Users Say</h2>
+            <p class="text-gray-600 text-lg">Join thousands of women who trust our app</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-pink-400 to-purple-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-medium">S</span>
+                    </div>
+                    <div class="ml-3">
+                        <h4 class="font-semibold text-gray-800">Sarah M.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic">"This app has completely changed how I understand my cycle. The predictions are spot-on!"</p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-medium">E</span>
+                    </div>
+                    <div class="ml-3">
+                        <h4 class="font-semibold text-gray-800">Emma L.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic">"The health tips are so helpful, and I love the beautiful design!"</p>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="card-hover bg-white rounded-2xl p-6 shadow-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-peach-400 to-pink-500 rounded-full flex items-center justify-center">
+                        <span class="text-white font-medium">M</span>
+                    </div>
+                    <div class="ml-3">
+                        <h4 class="font-semibold text-gray-800">Maria K.</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 italic">"Finally, a period tracker that's both beautiful and functional!"</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Final CTA Section -->
+<div class="py-20 bg-gradient-to-r from-pink-500 to-purple-500">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl md:text-5xl font-script text-white mb-6">
+            Ready to Start Your Journey? 🌸
+        </h2>
+        <p class="text-xl text-pink-100 mb-8">
+            Join thousands of women who are already tracking their flow and owning their glow
+        </p>
+        <a href="{{ url_for('register') }}" class="bg-white text-pink-600 px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-block">
+            <i class="fas fa-heart mr-2"></i>Get Started Today
+        </a>
+    </div>
+</div>
+{% endblock %} 

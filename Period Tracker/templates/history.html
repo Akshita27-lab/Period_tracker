@@ -1,0 +1,463 @@
+{% extends "base.html" %}
+
+{% block title %}🌸 FlowBuddy - History{% endblock %}
+
+{% block content %}
+<!-- Beautiful History Page -->
+<div class="min-h-screen bg-gradient-to-br from-pink-50 via-peach-50 to-cream-50">
+    <!-- Header Section -->
+    <div class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-100/30 via-purple-100/30 to-peach-100/30"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center">
+                <!-- Animated Icon -->
+                <div class="inline-block mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300 animate-bounce">
+                        <span class="text-white text-3xl">📊</span>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-script text-pink-600 mb-4 animate-fade-in">
+                    Your Cycle History 💖
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 italic font-medium animate-fade-in-delay">
+                    Track your journey, understand your patterns
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        
+        <!-- Quick Stats Section -->
+        <section class="mb-16 animate-slide-up">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Total Periods -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🩸</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-pink-600 mb-2">Total Periods</h3>
+                        <p class="text-3xl font-bold text-pink-500">{{ period_logs|length }}</p>
+                        <p class="text-sm text-gray-600 mt-2">Tracked cycles</p>
+                    </div>
+                </div>
+
+                <!-- Average Cycle Length -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">📅</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-pink-600 mb-2">Average Cycle</h3>
+                        <p class="text-3xl font-bold text-purple-500">
+                            {% if period_logs|length > 1 %}
+                                {% set total_days = 0 %}
+                                {% set count = 0 %}
+                                {% for log in period_logs %}
+                                    {% if log.actual_start_date and loop.index < period_logs|length %}
+                                        {% set next_log = period_logs[loop.index] %}
+                                        {% if next_log.actual_start_date %}
+                                            {% set total_days = total_days + (next_log.actual_start_date - log.actual_start_date).days %}
+                                            {% set count = count + 1 %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if count > 0 %}{{ (total_days / count)|round(1) }}{% else %}28{% endif %}
+                            {% else %}
+                                28
+                            {% endif %}
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">Days per cycle</p>
+                    </div>
+                </div>
+
+                <!-- Mood Entries -->
+                <div class="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-peach-200 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">😊</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-pink-600 mb-2">Mood Entries</h3>
+                        <p class="text-3xl font-bold text-peach-500">{{ mood_trackers|length }}</p>
+                        <p class="text-sm text-gray-600 mt-2">Tracked moods</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Period History Section -->
+        <section class="mb-16 animate-slide-up-delay">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-script text-pink-600 mb-4">Period History</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
+            </div>
+            
+            {% if period_logs %}
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-pink-100">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-pink-200">
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Expected Date</th>
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Actual Date</th>
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Duration</th>
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Delay</th>
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Notes</th>
+                                <th class="text-left py-4 px-6 text-pink-600 font-semibold">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in period_logs %}
+                            <tr class="border-b border-pink-100 hover:bg-pink-50/50 transition-colors">
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-pink-400 rounded-full mr-3"></div>
+                                        <span class="text-gray-700">{{ log.expected_date.strftime('%B %d, %Y') }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    {% if log.actual_start_date %}
+                                        <span class="text-green-600 font-medium">{{ log.actual_start_date.strftime('%B %d, %Y') }}</span>
+                                    {% else %}
+                                        <span class="text-gray-400 italic">Not recorded</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {% if log.duration %}
+                                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                                            {{ log.duration }} days
+                                        </span>
+                                    {% else %}
+                                        <span class="text-gray-400 italic">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {% if log.delay_days %}
+                                        {% if log.delay_days > 0 %}
+                                            <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                +{{ log.delay_days }} days
+                                            </span>
+                                        {% elif log.delay_days < 0 %}
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                {{ log.delay_days }} days
+                                            </span>
+                                        {% else %}
+                                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                                On time
+                                            </span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span class="text-gray-400 italic">-</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-6">
+                                    {% if log.notes %}
+                                        <span class="text-gray-600 text-sm">{{ log.notes[:30] }}{% if log.notes|length > 30 %}...{% endif %}</span>
+                                    {% else %}
+                                        <span class="text-gray-400 italic">No notes</span>
+                                    {% endif %}
+                                </td>
+                                <td class="py-4 px-6">
+                                    <button class="text-pink-500 hover:text-pink-700 transition-colors" onclick="editLog({{ log.id }})">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-12 shadow-lg border border-pink-100 text-center">
+                <div class="w-24 h-24 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-4xl">📝</span>
+                </div>
+                <h3 class="text-2xl font-script text-pink-600 mb-4">No Period History Yet</h3>
+                <p class="text-gray-600 mb-8">Start tracking your periods to see your history here!</p>
+                <a href="{{ url_for('dashboard') }}" class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-plus mr-2"></i>Add Period Log
+                </a>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- Mood History Section -->
+        <section class="mb-16 animate-slide-up-delay-2">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-script text-pink-600 mb-4">Mood History</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full"></div>
+            </div>
+            
+            {% if mood_trackers %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for mood in mood_trackers %}
+                <div class="mood-card bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-pink-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full flex items-center justify-center">
+                                <span class="text-2xl">
+                                    {% if mood.mood == 'happy' %}😊
+                                    {% elif mood.mood == 'sad' %}😢
+                                    {% elif mood.mood == 'tired' %}😴
+                                    {% elif mood.mood == 'irritated' %}😤
+                                    {% else %}😐{% endif %}
+                                </span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-pink-600 capitalize">{{ mood.mood }}</h3>
+                                <p class="text-sm text-gray-500">{{ mood.date.strftime('%B %d, %Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if mood.symptoms %}
+                    <div class="bg-pink-50 rounded-lg p-3 mb-4">
+                        <h4 class="text-sm font-semibold text-pink-600 mb-2">Symptoms:</h4>
+                        <p class="text-sm text-gray-600">{{ mood.symptoms }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-400">{{ mood.created_at.strftime('%I:%M %p') }}</span>
+                        <div class="flex space-x-2">
+                            <button class="text-pink-500 hover:text-pink-700 transition-colors" onclick="editMood({{ mood.id }})">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-12 shadow-lg border border-pink-100 text-center">
+                <div class="w-24 h-24 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <span class="text-4xl">😊</span>
+                </div>
+                <h3 class="text-2xl font-script text-pink-600 mb-4">No Mood History Yet</h3>
+                <p class="text-gray-600 mb-8">Start tracking your moods to see your emotional patterns!</p>
+                <a href="{{ url_for('dashboard') }}" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-heart mr-2"></i>Track Mood
+                </a>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- Add New Log Section -->
+        <section class="mb-16 animate-slide-up-delay-3">
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-pink-100">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-script text-pink-600 mb-4">Add New Period Log</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-500 mx-auto rounded-full mb-6"></div>
+                    <p class="text-gray-600">Record a new period entry to keep your history complete</p>
+                </div>
+                
+                <form method="POST" action="{{ url_for('add_period_log') }}" class="max-w-2xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-pink-600 mb-2">Expected Date</label>
+                            <input type="date" name="expected_date" required 
+                                   class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-pink-600 mb-2">Actual Start Date</label>
+                            <input type="date" name="actual_start_date" 
+                                   class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-pink-600 mb-2">Duration (days)</label>
+                            <input type="number" name="duration" min="1" max="10" 
+                                   class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-pink-600 mb-2">Notes</label>
+                            <input type="text" name="notes" placeholder="Any symptoms or notes..."
+                                   class="w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300">
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <button type="submit" 
+                                class="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-plus mr-2"></i>Add Period Log
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Motivational Footer -->
+        <section class="text-center animate-fade-in-delay-2">
+            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-lg border border-pink-100">
+                <div class="mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl">💖</span>
+                    </div>
+                </div>
+                <blockquote class="text-2xl md:text-3xl font-script text-pink-600 italic mb-8">
+                    "Your history is your strength. Every cycle teaches you something new about yourself."
+                </blockquote>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="{{ url_for('dashboard') }}" 
+                       class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-home mr-2"></i>Back to Dashboard
+                    </a>
+                    <a href="{{ url_for('health_tips') }}" 
+                       class="inline-block bg-white/90 hover:bg-white text-pink-600 px-8 py-3 rounded-full font-medium transition-all duration-300 border-2 border-pink-200 hover:border-pink-300">
+                        <i class="fas fa-heart mr-2"></i>Health Tips
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Custom CSS for animations -->
+<style>
+    @keyframes fade-in {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slide-up {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animate-fade-in {
+        animation: fade-in 1s ease-out;
+    }
+    
+    .animate-fade-in-delay {
+        animation: fade-in 1s ease-out 0.3s both;
+    }
+    
+    .animate-fade-in-delay-2 {
+        animation: fade-in 1s ease-out 0.6s both;
+    }
+    
+    .animate-slide-up {
+        animation: slide-up 1s ease-out 0.2s both;
+    }
+    
+    .animate-slide-up-delay {
+        animation: slide-up 1s ease-out 0.4s both;
+    }
+    
+    .animate-slide-up-delay-2 {
+        animation: slide-up 1s ease-out 0.6s both;
+    }
+    
+    .animate-slide-up-delay-3 {
+        animation: slide-up 1s ease-out 0.8s both;
+    }
+    
+    /* Card hover effects */
+    .mood-card:hover {
+        box-shadow: 0 20px 40px rgba(236, 72, 153, 0.15);
+    }
+    
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Custom colors */
+    .bg-cream-50 {
+        background-color: #fefcf8;
+    }
+    
+    /* Table styling */
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    
+    th {
+        background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    }
+</style>
+
+<!-- JavaScript for enhanced interactions -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add intersection observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+    
+    // Add ripple effect to buttons
+    const buttons = document.querySelectorAll('a, button');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+});
+
+// Add ripple effect CSS
+const style = document.createElement('style');
+style.textContent = `
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(0);
+        animation: ripple-animation 0.6s linear;
+        pointer-events: none;
+    }
+    
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Placeholder functions for edit actions
+function editLog(logId) {
+    // Implement edit functionality
+    console.log('Edit log:', logId);
+}
+
+function editMood(moodId) {
+    // Implement edit functionality
+    console.log('Edit mood:', moodId);
+}
+</script>
+{% endblock %} 

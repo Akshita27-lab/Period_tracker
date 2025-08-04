@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Period Health{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">📚 Period Health Blog</h1>
+            <p class="text-lg text-gray-600">Educational articles about menstrual health and wellness</p>
+        </div>
+
+        <!-- Blog Cards -->
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+            <!-- Card 1: Menstrual Cycle -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div class="p-6">
+                    <div class="text-4xl mb-4 text-center">🔄</div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Understanding Your Menstrual Cycle</h2>
+                    <p class="text-gray-600 mb-4">Your menstrual cycle is more than just your period — it's a powerful indicator of your overall health. Learn about the 4 phases and what they mean for your body.</p>
+                    <a href="{{ url_for('menstrual_cycle') }}" class="inline-flex items-center text-pink-500 hover:text-pink-600 font-semibold transition-colors">
+                        Read More →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: Period Taboos -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div class="p-6">
+                    <div class="text-4xl mb-4 text-center">💪</div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Famous Women Who Broke Period Taboos</h2>
+                    <p class="text-gray-600 mb-4">Throughout history, many bold women have spoken out, challenged stereotypes, and empowered millions to treat menstruation as normal, not shameful.</p>
+                    <a href="{{ url_for('period_taboos') }}" class="inline-flex items-center text-pink-500 hover:text-pink-600 font-semibold transition-colors">
+                        Read More →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: Period Myths -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div class="p-6">
+                    <div class="text-4xl mb-4 text-center">🔍</div>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Common Period Myths Debunked</h2>
+                    <p class="text-gray-600 mb-4">Let's clear the confusion and bust some myths that girls have been told for years! Because facts > fear.</p>
+                    <a href="{{ url_for('period_myths') }}" class="inline-flex items-center text-pink-500 hover:text-pink-600 font-semibold transition-colors">
+                        Read More →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center">
+            <a href="{{ url_for('dashboard') }}" class="inline-flex items-center bg-gradient-to-r from-pink-500 to-purple-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-600 hover:to-purple-600 transition-all transform hover:scale-105">
+                <span class="mr-2">🏠</span>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

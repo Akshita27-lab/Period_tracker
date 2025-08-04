@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Period Tracker{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - More girly fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose': {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337'
+                        },
+                        'pink': {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843'
+                        },
+                        'purple': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87'
+                        },
+                        'peach': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12'
+                        },
+                        'lavender': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Quicksand', 'sans-serif'],
+                        'script': ['Dancing Script', 'cursive'],
+                        'elegant': ['Playfair Display', 'serif'],
+                        'modern': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Enhanced girly gradient background */
+        .gradient-bg {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 25%, #faf5ff 50%, #fef3c7 75%, #fdf2f8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Enhanced card hover effects */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #fff 0%, #fdf2f8 100%);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.25);
+            border: 2px solid #f472b6;
+            background: linear-gradient(135deg, #fff 0%, #fce7f3 100%);
+        }
+        
+        /* Floating animation */
+        .floating-notification {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(2deg); }
+            50% { transform: translateY(-10px) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(-2deg); }
+        }
+        
+        /* Enhanced cycle circle */
+        .cycle-circle {
+            background: conic-gradient(from 0deg, #ec4899 0deg, #ec4899 var(--progress), #f3e8ff var(--progress), #f3e8ff 360deg);
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);
+            border: 4px solid #fff;
+        }
+        
+        /* Enhanced mood emoji */
+        .mood-emoji {
+            font-size: 2.5rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        
+        .mood-emoji:hover {
+            transform: scale(1.3) rotate(5deg);
+            filter: drop-shadow(0 8px 16px rgba(236, 72, 153, 0.3));
+        }
+        
+        /* Enhanced tip card */
+        .tip-card {
+            background: linear-gradient(135deg, #fff 0%, #fdf2f8 50%, #faf5ff 100%);
+            border: 2px solid #fce7f3;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.1);
+        }
+        
+        /* Enhanced notification bell */
+        .notification-bell {
+            animation: ring 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #fff 0%, #fdf2f8 100%);
+            border: 2px solid #f472b6;
+        }
+        
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(8deg) scale(1.05); }
+            20%, 40%, 60%, 80% { transform: rotate(-8deg) scale(1.05); }
+        }
+        
+        /* Girly button styles */
+        .girly-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+        
+        .girly-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+            border: 2px solid #f472b6;
+        }
+        
+        /* Sparkle effect */
+        .sparkle {
+            position: relative;
+        }
+        
+        .sparkle::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+        
+        /* Enhanced navigation */
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ec4899, #a855f7);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Cute loading animation */
+        .loading-hearts {
+            display: inline-block;
+            animation: heartBeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Enhanced form inputs */
+        .girly-input {
+            border: 2px solid #fce7f3;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #fff 0%, #fdf2f8 100%);
+        }
+        
+        .girly-input:focus {
+            border-color: #ec4899;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen font-sans">
+    <!-- Floating Hearts Background -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-20 left-10 text-pink-300 opacity-30 animate-pulse">💖</div>
+        <div class="absolute top-40 right-20 text-purple-300 opacity-30 animate-pulse delay-1000">🌸</div>
+        <div class="absolute bottom-40 left-20 text-rose-300 opacity-30 animate-pulse delay-2000">✨</div>
+        <div class="absolute bottom-20 right-10 text-pink-300 opacity-30 animate-pulse delay-3000">💕</div>
+    </div>
+
+    <!-- Enhanced Floating Notification Bell -->
+    <div class="fixed top-4 right-4 z-50">
+        <div class="notification-bell bg-white rounded-full p-4 shadow-xl cursor-pointer sparkle">
+            <i class="fas fa-bell text-pink-500 text-xl"></i>
+        </div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md shadow-lg border-b-2 border-pink-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-pink-400 via-purple-500 to-rose-400 rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-heart text-white text-lg loading-hearts"></i>
+                        </div>
+                        <span class="text-2xl font-script text-pink-600 font-bold sparkle">FlowBuddy</span>
+                    </a>
+                </div>
+                
+                {% if current_user.is_authenticated %}
+                <div class="flex items-center space-x-6">
+                    <a href="{{ url_for('dashboard') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-home mr-2"></i> Dashboard
+                    </a>
+                    <a href="{{ url_for('history') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-history mr-2"></i> History
+                    </a>
+                    <a href="{{ url_for('health_tips') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-lightbulb mr-2"></i> Health Tips
+                    </a>
+                    <a href="{{ url_for('self_care') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-spa mr-2"></i> Self-Care
+                    </a>
+                    <a href="{{ url_for('lifestyle_advice') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-heartbeat mr-2"></i> Lifestyle
+                    </a>
+                    <a href="{{ url_for('blog') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-book mr-2"></i> Blog
+                    </a>
+                    <a href="{{ url_for('period_kit') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-briefcase mr-2"></i> Period Kit
+                    </a>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-pink-400 via-purple-500 to-rose-400 rounded-full flex items-center justify-center shadow-lg">
+                            <span class="text-white text-lg font-bold">{{ current_user.name[0].upper() }}</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <p class="text-sm font-medium text-gray-700 font-script">Hi {{ current_user.name }}! 👋</p>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="girly-btn text-white px-6 py-3 rounded-full text-sm font-bold transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+                {% else %}
+                <div class="flex items-center space-x-6">
+                    <a href="{{ url_for('login') }}" class="nav-link text-gray-700 hover:text-pink-500 transition-colors font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="girly-btn text-white px-6 py-3 rounded-full text-sm font-bold transition-colors">
+                        <i class="fas fa-user-plus mr-2"></i> Sign Up
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+                {% for category, message in messages %}
+                    <div class="mb-6 p-6 rounded-2xl border-l-4 {% if category == 'error' %}bg-red-50 border-red-400 text-red-700{% elif category == 'success' %}bg-green-50 border-green-400 text-green-700{% else %}bg-blue-50 border-blue-400 text-blue-700{% endif %} shadow-lg card-hover">
+                        <div class="flex items-center">
+                            <i class="fas {% if category == 'error' %}fa-exclamation-circle{% elif category == 'success' %}fa-check-circle{% else %}fa-info-circle{% endif %} mr-3 text-xl"></i>
+                            <span class="font-medium">{{ message }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Enhanced Footer -->
+    <footer class="bg-white/90 backdrop-blur-md border-t-2 border-pink-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-600 text-lg font-script">
+                    <i class="fas fa-heart text-pink-500 mr-2 loading-hearts"></i>
+                    Track your flow, own your glow ✨
+                </p>
+                <p class="text-gray-500 text-sm mt-3 font-medium">Your cycle, your power 💪</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (if needed for any existing functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Enhanced Custom JavaScript -->
+    <script>
+        // Auto-hide flash messages after 6 seconds
+        setTimeout(function() {
+            const flashMessages = document.querySelectorAll('.mb-6.p-6.rounded-2xl');
+            flashMessages.forEach(function(message) {
+                message.style.opacity = '0';
+                message.style.transform = 'translateY(-20px)';
+                message.style.transition = 'all 0.5s ease';
+                setTimeout(function() {
+                    message.remove();
+                }, 500);
+            });
+        }, 6000);
+
+        // Enhanced hover effects to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(function(card) {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Add sparkle effect to important elements
+            const sparkleElements = document.querySelectorAll('.sparkle');
+            sparkleElements.forEach(function(element) {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1)';
+                });
+                element.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html> 

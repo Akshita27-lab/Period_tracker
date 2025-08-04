@@ -1,0 +1,413 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Period Tracker{% endblock %}
+
+{% block content %}
+<!-- Welcome Section -->
+<div class="mb-8">
+    <div class="bg-gradient-to-r from-pink-400 via-purple-500 to-rose-400 rounded-3xl p-8 text-white shadow-2xl card-hover">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-script mb-3 sparkle">
+                    Hi {{ current_user.name }}! 👋
+                </h1>
+                <p class="text-pink-100 text-xl font-medium">
+                    {% if today_mood %}
+                        Your Day {{ (today - cycle_settings.start_date).days + 1 if cycle_settings else 1 }} has started. Don't forget to rest! 💕
+                    {% else %}
+                        Track your flow, own your glow ✨
+                    {% endif %}
+                </p>
+            </div>
+            <div class="hidden md:block">
+                <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center shadow-xl">
+                    <i class="fas fa-heart text-4xl loading-hearts"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Smart Period Confirmation Box -->
+{% if cycle_progress and cycle_progress.get('show_question', False) %}
+<div id="period-question-box" class="mb-8 animate-fade-in">
+    <div class="bg-gradient-to-r from-pink-100 via-purple-100 to-rose-100 rounded-3xl p-8 shadow-2xl border-2 border-pink-200 card-hover">
+        <div class="text-center">
+            <h3 class="text-2xl font-script text-pink-600 mb-4 sparkle">🌸 Period Check-in</h3>
+            <p class="text-gray-700 mb-8 text-xl font-medium">Has your period started today?</p>
+            
+            <div class="flex justify-center space-x-6">
+                <button id="period-yes-btn" class="girly-btn text-white px-10 py-4 rounded-full transition-colors font-bold text-lg">
+                    ✅ YES
+                </button>
+                <button id="period-no-btn" class="bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white px-10 py-4 rounded-full transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-xl">
+                    ❌ NO
+                </button>
+            </div>
+            
+            <div id="supportive-message" class="mt-6 text-gray-600 italic text-lg hidden"></div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Left Column - Cycle Info -->
+    <div class="lg:col-span-2 space-y-6">
+        <!-- Cycle Status Card -->
+        <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-script text-pink-600 sparkle">Your Cycle Status</h2>
+                <div class="flex items-center space-x-2">
+                    <span class="px-6 py-3 rounded-full text-sm font-bold
+                        {% if cycle_status == 'On track' %}bg-green-100 text-green-700 border-2 border-green-300
+                        {% elif cycle_status == 'Upcoming' %}bg-yellow-100 text-yellow-700 border-2 border-yellow-300
+                        {% else %}bg-red-100 text-red-700 border-2 border-red-300{% endif %}">
+                        {{ cycle_status }}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Enhanced Cycle Circle -->
+                <div class="text-center">
+                    <div class="relative w-56 h-56 mx-auto mb-6">
+                        <div class="w-full h-full rounded-full border-8 border-pink-100 flex items-center justify-center shadow-xl">
+                            <div class="text-center">
+                                <div id="cycle-day-display" class="text-5xl font-bold text-pink-600 mb-2">
+                                    {% if cycle_progress %}
+                                        {{ cycle_progress.get('day', '--') }}
+                                    {% else %}
+                                        --
+                                    {% endif %}
+                                </div>
+                                <div id="cycle-message-display" class="text-lg text-gray-500 font-medium">
+                                    {% if cycle_progress %}
+                                        {% if cycle_progress.get('status') == 'period' %}
+                                            Day of Period
+                                        {% else %}
+                                            Day of Cycle
+                                        {% endif %}
+                                    {% else %}
+                                        Day of Cycle
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Progress Ring -->
+                        <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+                            <defs>
+                                <linearGradient id="pinkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="112" cy="112" r="104" stroke="url(#pinkGradient)" stroke-width="8" fill="none" 
+                                    stroke-dasharray="653.45" stroke-dashoffset="{% if cycle_progress %}{{ 653.45 - (653.45 * cycle_progress.get('progress', 0) / 100) }}{% else %}653.45{% endif %}"
+                                    class="transition-all duration-1000 ease-in-out">
+                            </circle>
+                        </svg>
+                    </div>
+                    
+                    <!-- Cycle Info -->
+                    <div class="space-y-4">
+                        {% if cycle_settings %}
+                        <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 border-2 border-pink-200">
+                            <h4 class="text-lg font-bold text-pink-600 mb-3">📅 Cycle Details</h4>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span class="text-gray-600">Cycle Length:</span>
+                                    <span class="font-bold text-pink-600">{{ cycle_settings.cycle_length }} days</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Period Length:</span>
+                                    <span class="font-bold text-pink-600">{{ cycle_settings.period_length }} days</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Next Period:</span>
+                                    <span class="font-bold text-pink-600">{{ cycle_settings.next_period_date.strftime('%b %d') if cycle_settings.next_period_date else 'Not set' }}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-600">Ovulation:</span>
+                                    <span class="font-bold text-pink-600">{{ cycle_settings.ovulation_date.strftime('%b %d') if cycle_settings.ovulation_date else 'Not set' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-script text-pink-600 mb-4">Quick Actions</h3>
+                    
+                    <div class="grid grid-cols-1 gap-4">
+                        <a href="{{ url_for('period_reminder') }}" class="card-hover bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 border-2 border-pink-200 text-center">
+                            <div class="text-4xl mb-3">😊</div>
+                            <h4 class="text-lg font-bold text-pink-600 mb-2">Track Mood</h4>
+                            <p class="text-gray-600 text-sm">Log your daily mood and symptoms</p>
+                        </a>
+                        
+                        <a href="{{ url_for('health_tips') }}" class="card-hover bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-2 border-purple-200 text-center">
+                            <div class="text-4xl mb-3">💡</div>
+                            <h4 class="text-lg font-bold text-purple-600 mb-2">Health Tips</h4>
+                            <p class="text-gray-600 text-sm">Get personalized health advice</p>
+                        </a>
+                        
+                        <a href="{{ url_for('self_care') }}" class="card-hover bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl p-6 border-2 border-rose-200 text-center">
+                            <div class="text-4xl mb-3">🧘</div>
+                            <h4 class="text-lg font-bold text-rose-600 mb-2">Self-Care</h4>
+                            <p class="text-gray-600 text-sm">Pamper yourself with self-care activities</p>
+                        </a>
+                        
+                        <a href="{{ url_for('lifestyle_advice') }}" class="card-hover bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-6 border-2 border-pink-200 text-center">
+                            <div class="text-4xl mb-3">💝</div>
+                            <h4 class="text-lg font-bold text-pink-600 mb-2">Lifestyle Advice</h4>
+                            <p class="text-gray-600 text-sm">Get personalized lifestyle tips</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Water & Nutrition Tracking -->
+        <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl">
+            <h2 class="text-3xl font-script text-pink-600 mb-6 sparkle">💧 Water & Nutrition Tracker</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Water Tracking -->
+                <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-200">
+                    <h3 class="text-xl font-bold text-blue-600 mb-4">Water Intake (2L Goal)</h3>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>This Week</span>
+                            <span>{{ "%.1f"|format(water_stats.total_water) }}/14L</span>
+                        </div>
+                        <div class="w-full bg-blue-200 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-blue-400 to-cyan-400 h-3 rounded-full transition-all duration-500" 
+                                 style="width: {{ (water_stats.total_water / 14) * 100 }}%"></div>
+                        </div>
+                    </div>
+                    <button id="water-toggle" class="girly-btn text-white px-6 py-3 rounded-full font-bold transition-all duration-300">
+                        <i class="fas fa-tint mr-2"></i>
+                        <span id="water-text">Drank 2L Today</span>
+                    </button>
+                </div>
+                
+                <!-- Nutrition Tracking -->
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-200">
+                    <h3 class="text-xl font-bold text-green-600 mb-4">Iron-Rich Food</h3>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>This Week</span>
+                            <span>{{ nutrition_stats.days_with_iron }}/7 days</span>
+                        </div>
+                        <div class="w-full bg-green-200 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-green-400 to-emerald-400 h-3 rounded-full transition-all duration-500" 
+                                 style="width: {{(nutrition_stats.days_with_iron / 7) * 100 }}%"></div>
+                        </div>
+                    </div>
+                    <button id="nutrition-toggle" class="girly-btn text-white px-6 py-3 rounded-full font-bold transition-all duration-300">
+                        <i class="fas fa-apple-alt mr-2"></i>
+                        <span id="nutrition-text">Ate Iron-Rich Food</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right Column - Sidebar -->
+    <div class="space-y-6">
+        <!-- Today's Mood -->
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-2xl">
+            <h3 class="text-2xl font-script text-pink-600 mb-4">😊 Today's Mood</h3>
+            
+            {% if today_mood %}
+            <div class="text-center mb-4">
+                <div class="text-6xl mb-3 mood-emoji">{{ today_mood.emoji }}</div>
+                <p class="text-lg font-bold text-gray-700">{{ today_mood.mood }}</p>
+                {% if today_mood.symptoms %}
+                <p class="text-sm text-gray-500 mt-2">{{ today_mood.symptoms }}</p>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="text-center">
+                <p class="text-gray-500 mb-4">How are you feeling today?</p>
+                <a href="{{ url_for('period_reminder') }}" class="girly-btn text-white px-6 py-3 rounded-full font-bold">
+                    Track Mood
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Lifestyle Advice Preview -->
+        {% if lifestyle_advice %}
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-2xl">
+            <h3 class="text-2xl font-script text-pink-600 mb-4">💝 Lifestyle Tips</h3>
+            <div class="space-y-4">
+                {% for advice in lifestyle_advice[:3] %}
+                <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4 border border-pink-200">
+                    <h4 class="font-bold text-pink-600 mb-2">{{ advice.title }}</h4>
+                    <p class="text-sm text-gray-600">{{ advice.content[:100] }}...</p>
+                </div>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('lifestyle_advice') }}" class="block text-center mt-4 text-pink-500 hover:text-pink-600 font-medium">
+                View All Tips →
+            </a>
+        </div>
+        {% endif %}
+        
+        <!-- Quick Links -->
+        <div class="card-hover bg-white rounded-3xl p-6 shadow-2xl">
+            <h3 class="text-2xl font-script text-pink-600 mb-4">🔗 Quick Links</h3>
+            <div class="space-y-3">
+                <a href="{{ url_for('history') }}" class="flex items-center p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                    <i class="fas fa-history text-pink-500 mr-3"></i>
+                    <span class="font-medium">Period History</span>
+                </a>
+                <a href="{{ url_for('period_kit') }}" class="flex items-center p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                    <i class="fas fa-briefcase text-pink-500 mr-3"></i>
+                    <span class="font-medium">Period Kit</span>
+                </a>
+                <a href="{{ url_for('blog') }}" class="flex items-center p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                    <i class="fas fa-book text-pink-500 mr-3"></i>
+                    <span class="font-medium">Educational Blog</span>
+                </a>
+                <a href="{{ url_for('health_tips') }}" class="flex items-center p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                    <i class="fas fa-lightbulb text-pink-500 mr-3"></i>
+                    <span class="font-medium">Health Tips</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activities -->
+{% if recent_activities %}
+<div class="mt-8">
+    <div class="card-hover bg-white rounded-3xl p-8 shadow-2xl">
+        <h2 class="text-3xl font-script text-pink-600 mb-6 sparkle">📝 Recent Activities</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for activity in recent_activities %}
+            <div class="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 border-2 border-pink-200">
+                <div class="flex items-center mb-3">
+                    <div class="text-3xl mr-3">{{ activity.emoji }}</div>
+                    <div>
+                        <h4 class="font-bold text-pink-600">{{ activity.title }}</h4>
+                        <p class="text-sm text-gray-500">{{ activity.date.strftime('%b %d') }}</p>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm">{{ activity.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Enhanced JavaScript for real-time updates
+document.addEventListener('DOMContentLoaded', function() {
+    // Period confirmation functionality
+    const yesBtn = document.getElementById('period-yes-btn');
+    const noBtn = document.getElementById('period-no-btn');
+    const questionBox = document.getElementById('period-question-box');
+    const supportiveMessage = document.getElementById('supportive-message');
+    
+    if (yesBtn) {
+        yesBtn.addEventListener('click', function() {
+            fetch('/confirm_period', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ confirmed: true })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    questionBox.style.display = 'none';
+                    location.reload();
+                }
+            });
+        });
+    }
+    
+    if (noBtn) {
+        let delayCount = 0;
+        noBtn.addEventListener('click', function() {
+            delayCount++;
+            const messages = [
+                "It's okay, your body isn't a robot! 💕",
+                "Periods can be unpredictable, that's normal! 🌸",
+                "Take it easy, it'll come when it's ready! ✨",
+                "Your body knows what it's doing! 💪"
+            ];
+            supportiveMessage.textContent = messages[Math.min(delayCount - 1, messages.length - 1)];
+            supportiveMessage.classList.remove('hidden');
+        });
+    }
+    
+    // Water tracking
+    const waterToggle = document.getElementById('water-toggle');
+    const waterText = document.getElementById('water-text');
+    
+    if (waterToggle) {
+        waterToggle.addEventListener('click', function() {
+            fetch('/track_water', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    waterText.textContent = data.tracked ? 'Tracked Today!' : 'Drank 2L Today';
+                    waterToggle.classList.toggle('bg-green-500');
+                    waterToggle.classList.toggle('bg-pink-500');
+                }
+            });
+        });
+    }
+    
+    // Nutrition tracking
+    const nutritionToggle = document.getElementById('nutrition-toggle');
+    const nutritionText = document.getElementById('nutrition-text');
+    
+    if (nutritionToggle) {
+        nutritionToggle.addEventListener('click', function() {
+            fetch('/track_nutrition', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    nutritionText.textContent = data.tracked ? 'Tracked Today!' : 'Ate Iron-Rich Food';
+                    nutritionToggle.classList.toggle('bg-green-500');
+                    nutritionToggle.classList.toggle('bg-pink-500');
+                }
+            });
+        });
+    }
+    
+    // Add sparkle effects
+    const sparkleElements = document.querySelectorAll('.sparkle');
+    sparkleElements.forEach(function(element) {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+        });
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+</script>
+{% endblock %} 
